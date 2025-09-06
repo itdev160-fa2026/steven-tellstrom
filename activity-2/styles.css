@@ -1,0 +1,23 @@
+* {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: rgb(255, 238, 238);
+}
+
+body {
+    
+font-size: large;
+}
+
+button, input {
+    padding: 15px 30px;
+    font-size: 16px;
+}
+
+button {
+    background-color: rgb(226, 188, 188);
+    border-style: ridge;
+}
+
+input {
+    background-color: white;
+}
