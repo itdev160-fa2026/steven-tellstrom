@@ -61,7 +61,7 @@ demoElement.classList.add("test-class");
 
 //______________________________________________________________________________________________________________________
 
-console.log("PART C: ELEMENTS APPENDING DEMONSTRATIONS");
+console.log("PART C: ELEMENTS APPENDING DEMONSTRATIONS"); //
 
 console.log("\n----- using appendChild(): -----");
 const child1 = document.createElement("p");
@@ -72,13 +72,13 @@ console.log("after appendChild:", output.children.length);
 console.log("\n----- using prepend(): -----");
 const child2 = document.createElement("p");
 child2.textContent = "[prepend child - now first]";
-output.prepend(child2);
+output.prepend(child2); //prepend() adds to beginning, append adds to end.
 console.log("after prepend:", output.children.length);
 
 console.log("\n----- using insertBefore(): -----");
 const child3 = document.createElement("p");
 child3.textContent = "[inserted between children]";
-output.insertBefore(child3, child1);
+output.insertBefore(child3, child1); //insertBefore (newElement, referenceElement)
 console.log("after insertBefore:", output.children.length);
 
 console.log("\n----- using removeChild(): -----");
@@ -97,7 +97,7 @@ function addTask() {
     console.log("\n----- addTask() function -----");
     
     const taskInput = document.getElementById("taskInput");
-    const taskText = taskInput.value.trim();
+    const taskText = taskInput.value.trim(); //trim() removes whitespace at start/end.
     console.log("input value:", taskText);
     
     if (taskText === "") {
@@ -109,17 +109,13 @@ function addTask() {
     const listItem = document.createElement("li");
     listItem.textContent = taskText;
     listItem.classList.add("task-item");
-    
     const todoList = document.getElementById("todo-list");
     todoList.appendChild(listItem);
-    
-    taskInput.value = "";
-    
+    taskInput.value = ""; //clear input field after adding task
     document.getElementById("taskCount").textContent = `(${todoList.children.length} tasks)`;
-    
     console.log("task added:", taskText);
     console.log("total tasks:", todoList.children.length);
-    
+    // Add click event listener to toggle 'done' state
     listItem.addEventListener('click', function() {
         toggleTask(this);
     });
@@ -130,11 +126,11 @@ console.log("PART E: TASK STATE MANAGEMENT");
 
 function toggleTask(taskElement) {
 
-    taskElement.classList.toggle('done');
+    taskElement.classList.toggle('done'); //toggle done class on/off
     
     const todoList = document.getElementById("todo-list");
     const total = todoList.children.length;
-    const completed = todoList.querySelectorAll('.done').length;
+    const completed = todoList.querySelectorAll('.done').length; //count elements with done class
     
     console.log("total:", total, "completed:", completed);
 }
