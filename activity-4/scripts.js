@@ -100,17 +100,14 @@ function addTask() {
     const taskText = taskInput.value.trim();
     console.log("input value:", taskText);
     
-    if (taskText === "") 
-    {
+    if (taskText === "") {
         console.log("empty input, task not added");
         alert("please enter a task!");
         return;
     }
     
     const listItem = document.createElement("li");
-    
     listItem.textContent = taskText;
-    
     listItem.classList.add("task-item");
     
     const todoList = document.getElementById("todo-list");
