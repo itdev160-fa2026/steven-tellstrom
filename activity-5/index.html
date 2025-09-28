@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activity 5: Simple Math Operations Widget</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h2>Activity 5 : Simple Math Operations Widget</h2>
+    <p>[f12] to view event handling demonstrations</p>
+
+    <div class="math-widget">
+      <div class="input-section">
+        <input type="number" id="number1" placeholder="First #">
+        <input type="number" id="number2" placeholder="Second #">
+      </div>
+      
+      <div class="operations">
+        <button class="btn operation" data-operation="add">+ Add +</button>
+        <button class="btn operation" data-operation="subtract">- Subtract -</button>
+        <button class="btn operation" data-operation="multiply">* Multiply *</button>
+        <button class="btn operation" data-operation="divide">/ Divide /</button>
+      </div>
+      
+      <div id="result" class="result"></div>
+      <button id="clear" class="btn clear">Clear</button>
+    </div>
+
+    <div id="output"></div>
+    <script src="scripts.js"></script>
+  </body>
+</html>
