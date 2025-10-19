@@ -1,0 +1,243 @@
+body {
+    font-family: karla, sans-serif;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 25px;
+    background: linear-gradient(135deg, #cca2a2 0%, #dfdbcd 100%);
+}
+
+.todo-container {
+    background: rgb(255, 231, 234);
+    border-radius: 15px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.input-section {
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e1e5e9;
+}
+
+.input-section h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.input-controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+#taskInput {
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    width: 320px;
+}
+
+#prioritySelect {
+    padding: 12px 15px;
+    font-size: 16px;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    background: white;
+}
+
+button {
+    padding: 12px 15px;
+    font-size: 16px;
+    background: linear-gradient(45deg, #e53e3e, #c53030);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#addBtn, #markAllDoneBtn, #deleteCompletedBtn, #clearAllBtn {
+    background: linear-gradient(45deg, #6b7280, #4b5563);
+    color: white;
+}
+
+.filter-section {
+    margin-bottom: 25px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #e1e5e9;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: transparent;
+    color: #6b7280;
+    border: 2px solid #6b7280;
+}
+
+.filter-btn.active {
+    background: linear-gradient(45deg, #6b7280, #4b5563);
+    color: white;
+}
+
+.list-section h2 { 
+    color: #333;
+    margin-bottom: 15px;
+}
+
+#taskCount {
+    font-size: 0.85em;
+    color: #718096;
+}
+
+#todo-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task-item {
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 18px;
+    margin: 12px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-priority {
+    width: 8px;
+    height: 40px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-right: 12px;
+}
+
+.priority-high { background-color: #ff0000; }
+.priority-medium { background-color: #ffee00; }
+.priority-low { background-color: #00ff77; }
+
+.task-item.done {
+    background: #e6fffa;
+    color: #000000;
+    text-decoration: line-through;
+    opacity: 0.75;
+}
+
+.task-item.completed {
+    background: #f0fff4;
+    border-color: #9ae6b4;
+    opacity: 0.8;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.task-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.toggle-btn { background: #48bb78; }
+.delete-btn { background: #e53e3e; }
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #718096;
+    font-style: italic;
+}
+
+.controls-section {
+    margin-top: 25px;
+    padding-top: 18px;
+    border-top: 1px solid #e1e5e9;
+}
+
+.bulk-actions {
+    text-align: center;
+}
+
+.bulk-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    background: linear-gradient(45deg, #6b7280, #4b5563);
+}
+
+.bulk-btn.danger {
+    background: linear-gradient(45deg, #6b7280, #4b5563);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.task-status {
+    font-size: 0.85em;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 12px;
+    margin-left: 8px;
+}
+
+@media (max-width: 768px) {
+    .input-controls {
+        flex-direction: column;
+    }
+    
+    #taskInput, #prioritySelect {
+        width: 100%;
+    }
+    
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .bulk-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .bulk-btn {
+        width: 100%;
+    }
+}
+
+#output {
+    display: none;
+    margin-top: 30px;
+    padding: 20px;
+    background: rgb(255, 231, 234);
+    border-radius: 8px;
+    border: 2px solid #e1e5e9;
+}
+
+#output > button {
+    margin: 15px 10px;
+    padding: 15px 20px;
+}
+
+#output > div {
+    margin: 20px 0;
+}
+
+#output > input {
+    margin: 20px 0;
+}
+
+#output .append-demo-container {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
