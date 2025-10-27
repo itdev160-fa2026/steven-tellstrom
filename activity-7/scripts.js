@@ -1,300 +1,357 @@
+// Steven Tellstrom, ITDEV-160, 10-19-2025
 // Activity 7: Product Catalog Display
-// This file demonstrates arrays, objects, and data manipulation
 
-console.log("=== Activity 7: Product Catalog Display ===");
+console.log("----- Activity 7: Product Catalog Display -----");
 
-// Part A: Array and Object Demonstrations
-console.log("\n=== ARRAY DEMONSTRATIONS ===");
+//_______________________________________________________________________________________________________________________
 
-// Creating arrays
-const numbersArray = [1, 2, 3, 4, 5];
-const colorsArray = new Array('red', 'green', 'blue');
-const mixedArray = [42, 'hello', true, null, {name: 'John'}];
+// a : array and object demos
 
-console.log("Numbers array:", numbersArray);
-console.log("Colors array:", colorsArray);
-console.log("Mixed array:", mixedArray);
+console.log("\n----- ARRAY DEMONSTRATIONS -----");
 
-// Array methods demonstrations
-console.log("\nArray Methods:");
-const fruits = ['apple', 'banana'];
-console.log("Original fruits:", fruits);
+// different array creation methods
 
-fruits.push('orange');
-console.log("After push('orange'):", fruits);
+const numbersArray = [0, 1, 2, 3, 4];
+const animalArray = new Array('duck', 'cat', 'bird');
+const mixedArray = [122, 'hello', 'world', true, null, {name: 'Steven'}];
+const boolArray = [true, false, true, true];
 
-const lastFruit = fruits.pop();
-console.log("After pop():", fruits, "- removed:", lastFruit);
+console.log("Numbers array: ", numbersArray);
+console.log("Animal Array: ", animalArray);
+console.log("Mixed Array: ", mixedArray);
+console.log("Boolean Array: ", boolArray);
 
-fruits.unshift('grape');
-console.log("After unshift('grape'):", fruits);
+// different array methods ---> push(), pop(), shift(), unshift()
 
-const firstFruit = fruits.shift();
-console.log("After shift():", fruits, "- removed:", firstFruit);
+const companies = ['Apple', 'Microsoft', 'Nvidia']
+console.log("Original Companies:", companies)
 
-// Array iteration examples
+// push
+companies.push('Google');
+console.log("After push('Google'):", companies);
+
+// pop
+const removedCompany = companies.pop(); 
+console.log("After pop():", companies, "- removed:", removedCompany);
+
+// shift
+
+const firstCompany = companies.shift();
+console.log("After shift():", companies, "- removed:", firstCompany);
+
+// unshift
+companies.unshift('Meta'); 
+console.log("After unshift('Meta'):", companies);
+
+// array iteration
+
 console.log("\nArray Iteration Methods:");
-const numbers = [1, 2, 3, 4, 5];
+const grades = [40, 93, 78, 96, 88];
 
 console.log("For loop:");
-for (let i = 0; i < numbers.length; i++) {
-    console.log(`Index ${i}: ${numbers[i]}`);
+for (let i = 0; i < grades.length; i++) {
+    console.log(`Position ${i}: ${grades[i]}`);
 }
 
-console.log("For...of loop:");
-for (const number of numbers) {
-    console.log(`Value: ${number}`);
+console.log("For...of loop:"); //modren way to iterate over the values of an iterateble obj
+for (const grade of grades) {
+    console.log(`Score: ${grade}`);
 }
 
-console.log("forEach method:");
-numbers.forEach((number, index) => {
-    console.log(`forEach - Index ${index}: ${number}`);
+console.log("forEach() method:");
+grades.forEach((grade, position) => {
+    console.log(`forEach - Position ${position}: ${grade}`);
 });
 
-console.log("map method (double values):");
-const doubled = numbers.map(number => number * 2);
-console.log("Doubled:", doubled);
+console.log("map() method (add 10 points bonus):");
+const bonusGrades = grades.map(grade => grade + 10);
+console.log("Bonus grades:", bonusGrades);
 
-console.log("filter method (even numbers only):");
-const evenNumbers = numbers.filter(number => number % 2 === 0);
-console.log("Even numbers:", evenNumbers);
+console.log("filter() method (grades above 80 only):");
+const highGrades = grades.filter(grade => grade > 80);
+console.log("High grades:", highGrades);
 
-// Object demonstrations
-console.log("\n=== OBJECT DEMONSTRATIONS ===");
+console.log("\n----- OBJECT DEMONSTRATIONS -----");
 
-// Creating objects
-const person = {
-    firstName: 'John',
-    lastName: 'Doe',
-    age: 30,
-    city: 'New York',
-    isEmployed: true
+// create object using literal notation (object literal notation = syntax that lets you create an object in one line by using curly braces)
+
+const employee = 
+{
+    fullName: 'Steven Tellstrom',
+    program: 'IT Web and Software Developer',
+    age: 26,
+    location: 'Milwaukee',
+    isActive: true
 };
 
-console.log("Person object:", person);
+console.log("Employee object:", employee);
 
-// Property access methods
-console.log("Dot notation - firstName:", person.firstName);
-console.log("Bracket notation - lastName:", person['lastName']);
+// property access methods
+console.log("(Dot notation) Name:", employee.fullName);
+console.log("(Bracket notation) Program:", employee['program']);
 
-// Dynamic property access
-const propertyName = 'age';
-console.log(`Dynamic access (${propertyName}):`, person[propertyName]);
+// dynamic property access
+const field = 'age';
+console.log(`Dynamic access (${field}):`, employee[field]);
 
-// Adding and modifying properties
-person.email = 'john.doe@email.com';
-person['phone'] = '555-1234';
-person.age = 31;
+// add, modify, and delete properties
+employee.email = 'tellstrs@matc.edu';  // add
+employee.age = 96; // modify
+delete employee.location; // delete
 
-console.log("After adding/modifying properties:", person);
+console.log("After changes:", employee);
 
-// Deleting properties
-delete person.phone;
-console.log("After deleting phone:", person);
+//_______________________________________________________________________________________________________________________
 
-// Part B: Product Data Structure
-console.log("\n=== PRODUCT DATA STRUCTURE ===");
+// b : product data structure
 
-const products = [
+console.log("\n----- PRODUCT DATA STRUCTURE -----");
+
+// all images from pexels
+const inventory = [
     {
-        id: 1,
-        name: "Wireless Bluetooth Headphones",
-        description: "High-quality noise-cancelling wireless headphones with 30-hour battery life.",
-        price: 199.99,
-        category: "electronics",
-        image: "https://picsum.photos/seed/headphones/300/200"
+        id: 101, //can't start with 0 "e.g. 001" because octal literals not allowed
+        name: "Sansevieria \"Snake Plant\"",
+        description: "Low maintenance succulent with tall, swordlike leaves that pures the air and likes low light conditions.",
+        price: 24.99,
+        category: "Succulent",
+        image: "images/snake_plant.jpg"
     },
     {
-        id: 2,
-        name: "Organic Cotton T-Shirt",
-        description: "Comfortable 100% organic cotton t-shirt available in multiple colors.",
+        id: 102,
+        name: "Blue Columnar Cactus",
+        description: "Striking blue tinted columnar cactus that grows upright, perfect for desert gardens.",
+        price: 34.99,
+        category: "Succulent",
+        image: "images/blue_columnar_cactus.jpg"
+    },
+    {
+        id: 103,
+        name: "Chinese Evergreen",
+        description: "Beautiful foliage plant with colorful leaves in shades of green, pink, and silver.",
         price: 29.99,
-        category: "clothing",
-        image: "https://picsum.photos/seed/tshirt/300/200"
+        category: "Houseplants",
+        image: "images/chinese_evergreen.jpg"
     },
     {
-        id: 3,
-        name: "JavaScript Programming Guide",
-        description: "Comprehensive guide to modern JavaScript programming techniques and best practices.",
-        price: 45.00,
-        category: "books",
-        image: "https://picsum.photos/seed/jsbook/300/200"
+        id: 104,
+        name: "Sunflower",
+        description: "Bright yellow flower, perfect for gardens and cut flower arrangements.",
+        price: 4.99,
+        category: "Flowering",
+        image: "images/sunflower.jpg"
     },
     {
-        id: 4,
-        name: "Smart Home Security Camera",
-        description: "WiFi-enabled security camera with night vision and mobile app integration.",
-        price: 129.99,
-        category: "electronics",
-        image: "https://picsum.photos/seed/camera/300/200"
-    },
-    {
-        id: 5,
-        name: "Running Shoes",
-        description: "Lightweight running shoes with advanced cushioning technology.",
-        price: 89.99,
-        category: "clothing",
-        image: "https://picsum.photos/seed/shoes/300/200"
+        id: 105,
+        name: "Pothos",
+        description: "Trailing vine with heart shaped leaves, great for beginners and hanging baskets.",
+        price: 16.99,
+        category: "Vines",
+        image: "images/pothos.jpg"
     }
 ];
 
-console.log(`Loaded ${products.length} products:`, products);
+console.log(`Loaded ${inventory.length} items in inventory:`, inventory);
 
-// Demonstrate array methods with products
-console.log("\nProduct data manipulation examples:");
+console.log("\nAccessing product data:");
+console.log("First item name:", inventory[0].name);
+console.log("Second item price:", inventory[1].price);
+console.log("Third item category:", inventory[2]['category']);
 
-const electronicsProducts = products.filter(product => product.category === 'electronics');
-console.log("Electronics products:", electronicsProducts);
+console.log("\nFiltering and searching examples:");
 
-const clothingProducts = products.filter(product => product.category === 'clothing');
-console.log(`Clothing products: ${clothingProducts.length} found`);
+const succulentItems = inventory.filter(item => item.category === 'Succulent');
+console.log("Succulent items:", succulentItems);
 
-const productNames = products.map(product => product.name);
-console.log("All product names:", productNames);
+const budgetItems = inventory.filter(item => item.price < 25);
+console.log("Budget items (under $25):", budgetItems);
 
-const affordableProducts = products.filter(product => product.price < 100);
-console.log("Products under $100:", affordableProducts);
+const plantNames = inventory.map(item => item.name);
+console.log("All plant names:", plantNames);
 
-const averagePrice = products.reduce((sum, product) => sum + product.price, 0) / products.length;
-console.log(`Average product price: $${averagePrice.toFixed(2)}`);
+const pricesWithTax = inventory.map(item => (item.price * 1.10).toFixed(2));
+console.log("Prices with 10% tax:", pricesWithTax);
 
-// Part C: Product Display Functions
-console.log("\n=== PRODUCT DISPLAY FUNCTIONS ===");
+const totalValue = inventory.reduce((sum, item) => sum + item.price, 0);
+console.log("Total inventory value:", totalValue.toFixed(2));
 
-// Application state
-let appState = {
-    displayedProducts: [...products],
-    filters: {
-        search: '',
-        category: 'all'
-    }
-};
+const averagePrice = totalValue / inventory.length;
+console.log("Average plant price:", averagePrice.toFixed(2));
 
-function createProductCard(product) {
+const mostExpensive = inventory.reduce((max, item) => 
+    item.price > max.price ? item : max
+);
+console.log("Most expensive plant:", mostExpensive.name, "$" + mostExpensive.price);
+
+//_______________________________________________________________________________________________________________________
+
+// c : product display functions
+
+console.log("\n----- PRODUCT DISPLAY FUNCTIONS -----");
+
+// create html for individual product cards (simple way)
+function createProductCard(plant) {
+    
     const card = document.createElement('div');
     card.className = 'product-card';
-    card.setAttribute('data-product-id', product.id);
-
-    card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="product-image">
-        <div class="product-info">
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-description">${product.description}</p>
-            <div class="product-price">$${product.price.toFixed(2)}</div>
-            <span class="product-category">${product.category}</span>
-        </div>
-    `;
-
+    
+    const image = document.createElement('img');
+    image.src = plant.image;
+    image.alt = plant.name;
+    image.className = 'product-image';
+    
+    const info = document.createElement('div');
+    info.className = 'product-info';
+    
+    const title = document.createElement('h3');
+    title.textContent = plant.name;
+    
+    const description = document.createElement('p');
+    description.textContent = plant.description;
+    
+    const price = document.createElement('div');
+    price.className = 'product-price';
+    price.textContent = '$' + plant.price.toFixed(2);
+    
+    const category = document.createElement('span');
+    category.className = 'product-category';
+    category.textContent = plant.category;
+    
+    info.appendChild(title);
+    info.appendChild(description);
+    info.appendChild(price);
+    info.appendChild(category);
+    
+    card.appendChild(image);
+    card.appendChild(info);
+    
     return card;
 }
 
-function displayProducts(productsToShow) {
-    const productGrid = document.getElementById('product-grid');
-    productGrid.innerHTML = '';
-
-    if (productsToShow.length === 0) {
-        productGrid.innerHTML = `
-            <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #666;">
-                <h3>No products found</h3>
-                <p>Try adjusting your search or filters.</p>
-            </div>
-        `;
+// display entire catalog
+function displayProducts(plantsToShow) {
+    const grid = document.getElementById('product-grid');
+    
+    grid.innerHTML = '';
+    
+    if (plantsToShow.length === 0) 
+    {
+        const message = document.createElement('div');
+        message.textContent = 'No plants found';
+        grid.appendChild(message);
         return;
     }
-
-    productsToShow.forEach(product => {
-        const productCard = createProductCard(product);
-        productGrid.appendChild(productCard);
+    
+    plantsToShow.forEach(plant => {
+        const card = createProductCard(plant);
+        grid.appendChild(card);
     });
-
-    updateResultsCount(productsToShow.length);
-    console.log(`Displayed ${productsToShow.length} products`);
+    
+    updateResultsCount(plantsToShow.length);
 }
 
 function updateResultsCount(count) {
-    const totalProducts = products.length;
-    const resultsCount = document.getElementById('resultsCount');
-
-    if (count === totalProducts) {
-        resultsCount.textContent = `Showing all ${totalProducts} products`;
-    } else {
-        resultsCount.textContent = `Showing ${count} of ${totalProducts} products`;
+    const display = document.getElementById('resultsCount');
+    if (display)   
+    {
+        display.textContent = 'Showing ' + count + ' of ' + inventory.length + ' plants';
     }
 }
 
-// Part D: Search and Filter Functions
-function searchProducts(searchTerm) {
-    const term = searchTerm.toLowerCase().trim();
+console.log("Product display functions created successfully!");
 
-    if (term === '') {
-        return products;
+//_______________________________________________________________________________________________________________________
+
+// d : search and filter features
+
+console.log("\n----- SEARCH AND FILTER FEATURES -----");
+
+function searchPlants(searchWord) {
+    // if no search word, show all plants
+    if (!searchWord || searchWord === '') 
+    {
+        return inventory;
     }
-
-    return products.filter(product =>
-        product.name.toLowerCase().includes(term) ||
-        product.description.toLowerCase().includes(term) ||
-        product.category.toLowerCase().includes(term)
-    );
+    
+    const lowerSearchWord = searchWord.toLowerCase();
+    
+    // look through all plants
+    const foundPlants = [];
+    for (let i = 0; i < inventory.length; i++) 
+    {
+        const plant = inventory[i];
+        const plantName = plant.name.toLowerCase();
+        const plantDescription = plant.description.toLowerCase();
+        
+        // check if search word is in name or desc.
+        if (plantName.includes(lowerSearchWord) || plantDescription.includes(lowerSearchWord))
+        {
+            foundPlants.push(plant);
+        }
+    }
+    
+    return foundPlants;
 }
 
-function filterByCategory(products, category) {
-    if (category === 'all') {
-        return products;
-    }
+function filterByCategory(plants, category) {
 
-    return products.filter(product => product.category === category);
+    if (category === 'all') 
+    {
+        return plants;
+    }
+    
+    const matchingPlants = [];
+    for (let i = 0; i < plants.length; i++) 
+    {
+        if (plants[i].category === category) 
+        {
+            matchingPlants.push(plants[i]);
+        }
+    }
+    
+    return matchingPlants;
 }
 
 function applyFilters() {
-    console.log("Applying filters:", appState.filters);
-
-    let filteredProducts = searchProducts(appState.filters.search);
-    filteredProducts = filterByCategory(filteredProducts, appState.filters.category);
-
-    appState.displayedProducts = filteredProducts;
-    displayProducts(filteredProducts);
+ 
+    const searchBox = document.getElementById('searchInput');
+    const searchWord = searchBox.value;
+    
+    const categoryDropdown = document.getElementById('categoryFilter');
+    const selectedCategory = categoryDropdown.value;
+    
+    let filteredPlants = searchPlants(searchWord);
+    
+    filteredPlants = filterByCategory(filteredPlants, selectedCategory);
+    
+    displayProducts(filteredPlants);
 }
 
-// Event handlers
-function handleSearch() {
-    const searchInput = document.getElementById('searchInput');
-    appState.filters.search = searchInput.value;
-    applyFilters();
+function clearFilters() 
+{
+    
+    const searchBox = document.getElementById('searchInput');
+    searchBox.value = '';
+    
+    const categoryDropdown = document.getElementById('categoryFilter');
+    categoryDropdown.value = 'all';
+    
+    displayProducts(inventory);
 }
 
-function handleCategoryFilter() {
-    const categoryFilter = document.getElementById('categoryFilter');
-    appState.filters.category = categoryFilter.value;
-    applyFilters();
+function init() 
+{
+
+    const searchBox = document.getElementById('searchInput');
+    searchBox.addEventListener('input', applyFilters);
+    
+    const categoryDropdown = document.getElementById('categoryFilter');
+    categoryDropdown.addEventListener('change', applyFilters);
+    
+    const clearButton = document.getElementById('clearFiltersBtn');
+    clearButton.addEventListener('click', clearFilters);
+    
+    displayProducts(inventory);
 }
 
-function clearFilters() {
-    document.getElementById('searchInput').value = '';
-    document.getElementById('categoryFilter').value = 'all';
-
-    appState.filters = {
-        search: '',
-        category: 'all'
-    };
-
-    applyFilters();
-}
-
-// Initialize application
-function initializeApp() {
-    console.log("Initializing Product Catalog application...");
-
-    // Set up event listeners
-    document.getElementById('searchInput').addEventListener('input', handleSearch);
-    document.getElementById('categoryFilter').addEventListener('change', handleCategoryFilter);
-    document.getElementById('clearFiltersBtn').addEventListener('click', clearFilters);
-
-    // Display initial products
-    displayProducts(products);
-
-    console.log("Product Catalog application initialized successfully!");
-    console.log("Try searching and filtering products!");
-}
-
-// Start the application
-initializeApp();
+document.addEventListener('DOMContentLoaded', init);
