@@ -1,114 +1,147 @@
-// Activity 8: Asynchronous JavaScript Demonstrations
-// This file demonstrates async concepts that will be used in scripts.js
+// Steven Tellstrom, ITDEV-160, 10-28-2025
+// activity 8: quote of the day generator (demos) 
 
-console.log("=== Activity 8: Quote of the Day Generator ===");
+console.log("----- Activity 8: JavaScript Demos -----");
 
-// Part A: Asynchronous JavaScript Demonstrations
-console.log("\n=== ASYNCHRONOUS JAVASCRIPT DEMONSTRATIONS ===");
+//_______________________________________________________________________________________________________________________
 
-// Demonstrate setTimeout
-console.log("Starting setTimeout demonstrations...");
-console.log("1. This logs immediately");
+// part a : asynchronous javascript demonstration
 
-setTimeout(() => {
-  console.log("3. This logs after 1 second (setTimeout)");
-}, 1000);
+console.log("\n----- ASYNC DEMO -----");
 
-console.log("2. This also logs immediately (before setTimeout callback)");
-
-// Demonstrate the event loop
-console.log("\nEvent loop demonstration:");
-console.log("A. Synchronous code");
-
-setTimeout(() => {
-  console.log("C. Asynchronous callback (0ms timeout)");
-}, 0);
-
-console.log("B. More synchronous code");
-
-// Promise demonstration
-console.log("\nPromise demonstration:");
-
-const simplePromise = new Promise((resolve, reject) => {
-  const success = Math.random() > 0.3; // 70% success rate
-  setTimeout(() => {
-    if (success) {
-      resolve("Promise resolved successfully!");
-    } else {
-      reject("Promise rejected!");
-    }
-  }, 500);
-});
-
-// Handling promise with .then/.catch
-function demonstratePromise() {
-  console.log("Demonstrating promise with .then/.catch...");
-
-  simplePromise
-    .then((result) => {
-      console.log("Promise success:", result);
-    })
-    .catch((error) => {
-      console.log("Promise error:", error);
-    });
+function demonstrateSetTimeout() {
+    console.log("Demonstrating setTimeout ...");
+    setTimeout(function() { console.log("After 1 second"); }, 1000);
+    setTimeout(function() { console.log("After 2 seconds"); }, 2000);
+    console.log("This runs immediately");
 }
 
-// Handling promise with async/await
+function demonstrateSyncVsAsync() {
+    console.log("Demonstrating sync vs async ...");
+    console.log("Sync: Step 1");
+    console.log("Sync: Step 2");
+    setTimeout(function() { console.log("Async: Step 4"); }, 1000);
+    console.log("Sync: Step 3");
+}
+
+function demonstratePromises() {
+    console.log("Demonstrating promises ...");
+    
+    var simplePromise = new Promise(function(resolve, reject) {
+        setTimeout(function() { resolve("Promise worked!"); }, 500);
+    });
+
+    simplePromise
+        .then(function(result) { console.log("Promise result:", result); })
+        .catch(function(error) { console.log("Promise error:", error); });
+
+    var rejectPromise = new Promise(function(resolve, reject) {
+        setTimeout(function() { reject("Promise failed"); }, 800);
+    });
+
+    rejectPromise
+        .then(function(result) { console.log("Will not run"); })
+        .catch(function(error) { console.log("Caught error:", error); });
+}
+
 async function demonstrateAsyncAwait() {
-  console.log("Demonstrating promise with async/await...");
-
-  try {
-    const result = await simplePromise;
-    console.log("Async/await success:", result);
-  } catch (error) {
-    console.log("Async/await error:", error);
-  }
+    console.log("Demonstrating async/await ...");
+    try {
+        var promise = new Promise(function(resolve) {
+            setTimeout(function() { resolve("Async/await works!"); }, 300);
+        });
+        var result = await promise;
+        console.log("Async result:", result);
+    } catch (error) {
+        console.log("Async error:", error);
+    }
 }
 
-// Call both demonstrations
-demonstratePromise();
-demonstrateAsyncAwait();
+function demonstrateExecutionOrder() {
+    console.log("Demonstrating execution order ...");
+    console.log("# 1");
+    setTimeout(function() { console.log("# 4"); }, 0);
+    Promise.resolve().then(function() { console.log("# 3"); });
+    console.log("# 2");
+}
 
-// Part B: Fetch API Introduction
-console.log("\n=== FETCH API INTRODUCTION ===");
+//_______________________________________________________________________________________________________________________
 
-// Basic fetch demonstration with .then/.catch
+// part b: fetch api 
+
+console.log("\n----- FETCH API -----");
+
 function demonstrateFetch() {
-  console.log("Demonstrating basic fetch with .then/.catch...");
+    console.log("Demonstrating basic fetch with .then/.catch...");
 
-  fetch("https://jsonplaceholder.typicode.com/posts/1")
-    .then((response) => {
-      console.log("Response object:", response);
-      console.log("Response status:", response.status);
-      console.log("Response ok:", response.ok);
-      return response.json();
-    })
-    .then((data) => {
-      console.log("JSON data:", data);
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+        .then(function(response) {
+            console.log("Response object:", response);
+            console.log("Response status:", response.status);
+            console.log("Response ok:", response.ok);
+            return response.json();
+        })
+        .then(function(data) {
+            console.log("JSON data:", data);
+            console.log("Post title:", data.title);
+        })
+        .catch(function(error) {
+            console.log("Fetch error:", error);
+        });
 }
 
-// Async/await version of fetch
-async function demonstrateFetchAsync() {
-  console.log("Demonstrating fetch with async/await...");
+function demonstrateFetchError() {
+    console.log("Demonstrating fetch error handling...");
 
-  try {
-    const response = await fetch(
-      "https://jsonplaceholder.typicode.com/posts/2"
-    );
-    console.log("Async response object:", response);
-    console.log("Async response status:", response.status);
-
-    const data = await response.json();
-    console.log("Async JSON data:", data);
-  } catch (error) {
-    console.error("Async fetch error:", error);
-  }
+    fetch("https://jsonplaceholder.typicode.com/posts/123465789")
+        .then(function(response) {
+            console.log("Error response status:", response.status);
+            return response.json();
+        })
+        .then(function(data) {
+            console.log("This might not work");
+        })
+        .catch(function(error) {
+            console.log("Caught fetch error:", error);
+        });
 }
 
-// Call both demonstrations
+async function demonstrateAsyncFetch() {
+    console.log("Demonstrating async/await fetch...");
+    try {
+        var response = await fetch("https://jsonplaceholder.typicode.com/users/1");
+        console.log("Async response:", response);
+        var userData = await response.json();
+        console.log("User data:", userData);
+        console.log("User name:", userData.name);
+    } catch (error) {
+        console.log("Async fetch error:", error);
+    }
+}
+
+async function demonstrateMultipleFetch() {
+    console.log("Demonstrating multiple fetches...");
+    try {
+        var postResponse = await fetch("https://jsonplaceholder.typicode.com/posts/1");
+        var postData = await postResponse.json();
+        console.log("Post:", postData.title);
+
+        var userResponse = await fetch("https://jsonplaceholder.typicode.com/users/1");
+        var userData = await userResponse.json();
+        console.log("User:", userData.name);
+
+        console.log("All fetches complete!");
+    } catch (error) {
+        console.log("Multiple fetch error:", error);
+    }
+}
+
+demonstrateSetTimeout();
+demonstrateSyncVsAsync();
+demonstratePromises();
+demonstrateAsyncAwait();
+demonstrateExecutionOrder();
 demonstrateFetch();
-demonstrateFetchAsync();
+demonstrateFetchError();
+demonstrateAsyncFetch();
+demonstrateMultipleFetch();

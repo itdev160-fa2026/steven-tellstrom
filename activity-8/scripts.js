@@ -1,141 +1,131 @@
-// Activity 8: Quote of the Day Generator - Application Code
-// This file contains the quote generator application
+// Steven Tellstrom, ITDEV-160, 10-19-2025
+// Activity 8: Quote of the Day Generator
 
-console.log("\n=== QUOTE API INTEGRATION ===");
+console.log("=== Activity 8: Quote Generator ===");
 
-// Part A: Quote API Integration
-const QUOTE_API = 'https://dummyjson.com/quotes/random';
+//_______________________________________________________________________________________________________________________
 
-// Application state
-let appState = {
-    currentQuote: null,
-    isLoading: false
-};
+// part a : quote API integration
 
-// Fetch a random quote using async/await
-async function fetchQuote() {
-    try {
-        showLoading(true);
-        hideError();
+var QUOTE_API_URL = 'https://dummyjson.com/quotes/random';
+var newQuoteBtn = document.getElementById('newQuoteBtn');
+var loadingIndicator = document.getElementById('loadingIndicator');
+var quoteDisplay = document.getElementById('quoteDisplay');
+var errorDisplay = document.getElementById('errorDisplay');
 
-        console.log("Fetching random quote...");
-
-        const response = await fetch(QUOTE_API);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Fetched quote data:", data);
-
-        return data;
-  } catch (error) {
-    console.error("Error fetching quote:", error);
-    showError(`Failed to fetch quote: ${error.message}`);
-    return null;
-  } finally {
-    showLoading(false);
-  }
+function showLoading() {
+    loadingIndicator.style.display = 'block';
+    quoteDisplay.style.display = 'none';
+    errorDisplay.style.display = 'none';
+    newQuoteBtn.disabled = true;
+    newQuoteBtn.textContent = 'Loading...';
 }
 
-// Get and display a new quote
-async function getNewQuote() {
-  console.log("Getting new quote...");
-
-  const quote = await fetchQuote();
-
-  if (quote) {
-    appState.currentQuote = quote;
-    displayQuote(quote);
-    console.log("Successfully displayed new quote!");
-  }
-}
-
-// Part B: Quote Display Functions
-function displayQuote(quote) {
-    const container = document.getElementById('quoteContainer');
-
-    // Create quote card HTML
-    const quoteCard = document.createElement('div');
-    quoteCard.className = 'quote-card';
-
-    // DummyJSON API format: { quote: "quote text", author: "author" }
-    quoteCard.innerHTML = `
-        <p class="quote-text">${quote.quote}</p>
-        <p class="quote-author">&mdash; ${quote.author}</p>
-    `;
-
-    // Clear container and add new quote
-    container.innerHTML = '';
-    container.appendChild(quoteCard);
-
-    console.log(`Displayed quote by ${quote.author}`);
-}
-
-// UI Control Functions
-function showLoading(show) {
-  const loadingIndicator = document.getElementById("loadingIndicator");
-  const button = document.getElementById("getQuoteBtn");
-
-  if (show) {
-    loadingIndicator.classList.remove("hidden");
-    button.disabled = true;
-    appState.isLoading = true;
-  } else {
-    loadingIndicator.classList.add("hidden");
-    button.disabled = false;
-    appState.isLoading = false;
-  }
+function hideLoading() {
+    loadingIndicator.style.display = 'none';
+    newQuoteBtn.disabled = false;
+    newQuoteBtn.textContent = 'Get New Quote';
 }
 
 function showError(message) {
-  const errorDisplay = document.getElementById("errorDisplay");
-  const errorMessage = document.getElementById("errorMessage");
-
-  errorMessage.textContent = message;
-  errorDisplay.classList.remove("hidden");
+    errorDisplay.style.display = 'block';
+    quoteDisplay.style.display = 'none';
+    var errorElement = errorDisplay;
+    var errorText = errorElement.querySelector('p');
+    if (errorText) {
+        errorText.textContent = message;
+    }
 }
 
-function hideError() {
-  const errorDisplay = document.getElementById("errorDisplay");
-  errorDisplay.classList.add("hidden");
+//_______________________________________________________________________________________________________________________
+
+// part b: quote display functions
+
+function createQuoteCard(quoteText, authorName) {
+    quoteDisplay.innerHTML = '';
+    
+    var quoteElement = document.createElement('blockquote');
+    quoteElement.className = 'quote-text';
+    quoteElement.textContent = '"' + quoteText + '"';
+    
+    var authorElement = document.createElement('cite');
+    authorElement.className = 'quote-author';
+    authorElement.textContent = '— ' + authorName;
+    
+    quoteDisplay.appendChild(quoteElement);
+    quoteDisplay.appendChild(authorElement);
 }
 
-// Event handlers
-function handleGetQuote() {
-  getNewQuote();
+function showQuoteWithAnimation() {
+    quoteDisplay.style.opacity = '0';
+    quoteDisplay.style.display = 'block';
+    
+    setTimeout(function() {
+        quoteDisplay.style.opacity = '0.3';
+    }, 50);
+    
+    setTimeout(function() {
+        quoteDisplay.style.opacity = '0.6';
+    }, 100);
+    
+    setTimeout(function() {
+        quoteDisplay.style.opacity = '1';
+    }, 150);
 }
 
-function handleRetry() {
-  getNewQuote();
+function getRandomQuote() {
+    showLoading();
+    
+    fetch(QUOTE_API_URL)
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error('API request failed with status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(function(responseData) {
+            var quoteText = responseData.quote;
+            var authorName = responseData.author;
+            
+            if (!quoteText || !authorName) {
+                throw new Error('Invalid quote data');
+            }
+            
+            hideLoading();
+            errorDisplay.style.display = 'none';
+            
+            createQuoteCard(quoteText, authorName);
+            showQuoteWithAnimation();
+            
+            console.log("Quote displayed:", authorName);
+        })
+        .catch(function(error) {
+            hideLoading();
+            
+            var message = 'Something went wrong. Please try again.';
+            if (error.message.indexOf('fetch') !== -1) {
+                message = 'Network error. Check internet connection.';
+            } else if (error.message.indexOf('status') !== -1) {
+                message = 'Quote service unavailable.';
+            }
+            
+            showError(message);
+            console.log("Error:", error.message);
+        });
 }
 
-// Initialize application
-function initializeApp() {
-  console.log("Initializing Quote Generator application...");
-
-  // Set up event listeners
-  document
-    .getElementById("getQuoteBtn")
-    .addEventListener("click", handleGetQuote);
-  document.getElementById("retryBtn").addEventListener("click", handleRetry);
-
-  console.log("Quote Generator application initialized successfully!");
-  console.log("Click 'Get New Quote' to fetch a random quote!");
+function init() {
+    loadingIndicator.style.display = 'none';
+    quoteDisplay.style.display = 'none';
+    errorDisplay.style.display = 'none';
+    
+    newQuoteBtn.addEventListener('click', function() {
+        getRandomQuote();
+    });
+    
+    getRandomQuote();
+    
+    console.log("Quote generator ready!");
 }
 
-// Start the application
-initializeApp();
-
-// Display demo content
-document.getElementById("output").innerHTML = `
-    <h3>Quote Generator Features</h3>
-    <p>&#9989; Asynchronous JavaScript with setTimeout and Promises</p>
-    <p>&#9989; Fetch API for HTTP requests</p>
-    <p>&#9989; async/await syntax for cleaner code</p>
-    <p>&#9989; Loading states and error handling</p>
-    <p>&#9989; JSON data parsing and display</p>
-    <p>&#9989; Smooth animations with CSS</p>
-    <p>Check the console for async JavaScript demonstrations!</p>
-`;
+document.addEventListener('DOMContentLoaded', init);
