@@ -1,0 +1,144 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 15px;
+  background-color: #eeeeff;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+
+  margin-bottom: 10px;
+}
+
+p {
+  text-align: center;
+  color: #979797;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 20px auto;
+  background: white;
+  padding: 30px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+input.valid,
+select.valid,
+textarea.valid {
+  border-color: #27ae60;
+  background-color: #f8fff8;
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: #e74c3c;
+  background-color: #fff8f8;
+}
+
+.validation-feedback {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 20px auto 0 auto;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.form-status {
+  text-align: center;
+  padding: 10px;
+  margin-top: 15px;
+  display: none;
+}
+
+.form-status.success {
+  background-color: #d5f4e6;
+  color: #27ae60;
+  border: 1px solid #27ae60;
+}
+
+.form-status.error {
+  background-color: #f8d7da;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+}
+
+#output {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border: 1px solid #ddd;
+}
+
+#output h3 {
+  color: #2c3e50;
+  margin-top: 0;
+}
+
+#output p {
+  color: #666;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  
+  .form-container {
+    padding: 20px;
+  }
+}
