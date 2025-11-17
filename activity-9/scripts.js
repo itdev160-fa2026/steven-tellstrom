@@ -1,7 +1,5 @@
 // Steven Tellstrom, ITDEV-160, activity 9 (contact form validations)
 
-console.log("Activity 9 starting up...");
-
 //_______________________________________________________________________________________________________________________
 
 // part a: form access demo
