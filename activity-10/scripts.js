@@ -1,408 +1,417 @@
-// Activity 10: Tic-Tac-Toe with localStorage
-// This file demonstrates localStorage, game state management, and data persistence
+//Steven Tellstrom, ITDEV-160, activity 10
 
-console.log("=== Activity 10: Tic-Tac-Toe with localStorage ===");
+console.log("Activity 10: Tic-Tac-Toe with localStorage");
 
-// Part A: localStorage Demonstrations
-console.log("\n=== LOCALSTORAGE DEMONSTRATIONS ===");
+//_______________________________________________________________________________________________________________________
 
-// Check localStorage support
+
+//part a: localStorage demos
+
+
 function checkLocalStorageSupport() {
-  try {
-    const test = "localStorage-test";
-    localStorage.setItem(test, test);
-    localStorage.removeItem(test);
-    console.log("\u2713 localStorage is supported and available");
-    return true;
-  } catch (error) {
-    console.error("\u2717 localStorage is not available:", error);
-    return false;
-  }
-}
 
-const isLocalStorageSupported = checkLocalStorageSupport();
-
-// Demonstrate basic localStorage operations
-console.log("\nBasic localStorage operations:");
-
-// String storage
-localStorage.setItem("demo-string", "Hello localStorage!");
-console.log("Stored string:", localStorage.getItem("demo-string"));
-
-// Number storage (stored as string)
-localStorage.setItem("demo-number", "42");
-console.log("Stored number:", localStorage.getItem("demo-number"));
-
-// Object storage (requires JSON serialization)
-const demoObject = { player: "X", score: 3 };
-localStorage.setItem("demo-object", JSON.stringify(demoObject));
-const retrievedObject = JSON.parse(localStorage.getItem("demo-object"));
-console.log("Stored object:", retrievedObject);
-
-// Array storage (2D array like game board)
-const demoBoard = [
-  ["X", "O", "X"],
-  ["O", "X", "O"],
-  ["", "", "X"],
-];
-localStorage.setItem("demo-board", JSON.stringify(demoBoard));
-const retrievedBoard = JSON.parse(localStorage.getItem("demo-board"));
-console.log("Stored 2D array:", retrievedBoard);
-
-// Clean up demo items
-localStorage.removeItem("demo-string");
-localStorage.removeItem("demo-number");
-localStorage.removeItem("demo-object");
-localStorage.removeItem("demo-board");
-console.log("Demo items cleaned up");
-
-// Part B: Game State Management
-console.log("\n=== GAME STATE MANAGEMENT ===");
-
-// Storage keys for the game
-const STORAGE_KEYS = {
-  GAME_STATE: "tictactoe-game-state",
-  STATISTICS: "tictactoe-statistics",
-};
-
-// Game state
-let gameState = {
-  board: ["", "", "", "", "", "", "", "", ""],
-  currentPlayer: "X",
-  gameActive: true,
-  winner: null,
-  winningCombination: null,
-};
-
-// Game statistics
-let statistics = {
-  totalGames: 0,
-  xWins: 0,
-  oWins: 0,
-  draws: 0,
-};
-
-// Winning combinations
-const WINNING_COMBINATIONS = [
-  [0, 1, 2], // Top row
-  [3, 4, 5], // Middle row
-  [6, 7, 8], // Bottom row
-  [0, 3, 6], // Left column
-  [1, 4, 7], // Middle column
-  [2, 5, 8], // Right column
-  [0, 4, 8], // Diagonal top-left to bottom-right
-  [2, 4, 6], // Diagonal top-right to bottom-left
-];
-
-console.log("Winning combinations:", WINNING_COMBINATIONS);
-
-// Initialize new game
-function initializeGame() {
-  console.log("Initializing new game");
-
-  gameState = {
-    board: ["", "", "", "", "", "", "", "", ""],
-    currentPlayer: "X",
-    gameActive: true,
-    winner: null,
-    winningCombination: null,
-  };
-
-  updateBoard();
-  updateStatus();
-  saveGameState();
-
-  console.log("New game initialized:", gameState);
-}
-
-// Make a move
-function makeMove(index) {
-  console.log(`Attempting move at index ${index} by player ${gameState.currentPlayer}`);
-
-  // Check if move is valid
-  if (!gameState.gameActive || gameState.board[index] !== "") {
-    console.log("Invalid move - cell already taken or game over");
-    return;
-  }
-
-  // Update board
-  gameState.board[index] = gameState.currentPlayer;
-  console.log("Move made, updated board:", gameState.board);
-
-  // Check for winner
-  const result = checkWinner();
-
-  if (result.winner) {
-    gameState.gameActive = false;
-    gameState.winner = result.winner;
-    gameState.winningCombination = result.combination;
-    handleGameEnd(result.winner);
-    console.log(`Game over! Winner: ${result.winner}`, result.combination);
-  } else if (checkDraw()) {
-    gameState.gameActive = false;
-    handleGameEnd("draw");
-    console.log("Game over! It's a draw");
-  } else {
-    // Switch player
-    gameState.currentPlayer = gameState.currentPlayer === "X" ? "O" : "X";
-    console.log(`Switched to player ${gameState.currentPlayer}`);
-  }
-
-  updateBoard();
-  updateStatus();
-  saveGameState();
-}
-
-// Check for winner
-function checkWinner() {
-  console.log("Checking for winner...");
-
-  for (let combination of WINNING_COMBINATIONS) {
-    const [a, b, c] = combination;
-    const board = gameState.board;
-
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      console.log(`Winner found: ${board[a]} with combination`, combination);
-      return { winner: board[a], combination: combination };
+    try {
+        var testKey = "test-storage";
+        localStorage.setItem(testKey, "testing");
+        localStorage.removeItem(testKey);
+        console.log("localStorage works");
+        return true;
+    } catch (error) {
+        console.log("localStorage is NOT working:", error);
+        return false;
     }
-  }
-
-  console.log("No winner found");
-  return { winner: null, combination: null };
 }
 
-// Check for draw
+function showLocalStorage() {
+    console.log("----- localStorage demos -----");
+    
+    if (!checkLocalStorageSupport()) {
+        return;
+    }
+    
+    localStorage.setItem('name', 'Steven');
+    console.log("name:", localStorage.getItem('name'));
+    
+    let player = { name: 'Steven', score: 100 };
+    localStorage.setItem('player', JSON.stringify(player));
+    console.log("player:", JSON.parse(localStorage.getItem('player')));
+    
+    let games = ['win', 'lose', 'draw'];
+    localStorage.setItem('games', JSON.stringify(games));
+    console.log("games:", JSON.parse(localStorage.getItem('games')));
+    
+    localStorage.removeItem('name');
+    console.log("after remove:", localStorage.getItem('name'));
+    
+    localStorage.clear();
+    console.log("localStorage cleared");
+}
+
+
+//_______________________________________________________________________________________________________________________
+
+
+//part b: game state - using separate variables instead of obj
+
+
+var gameBoard = ['', '', '', '', '', '', '', '', ''];
+
+var currentPlayer = 'X';
+
+var gameStatus = 'playing';
+
+var gameWinner = null;
+
+// storage keys
+var gameStateKey = 'ticTacToeGame';
+var statsKey = 'gameStats';
+
+var isLocalStorageSupported = typeof(Storage) !== "undefined";
+
+function newGame() {
+    gameBoard = ['', '', '', '', '', '', '', '', ''];
+    currentPlayer = 'X';
+    gameStatus = 'playing';
+    gameWinner = null;
+    updateBoard();
+    saveGameState();
+}
+
+function makeMove(spot) {
+    console.log("making a move at position:", spot);
+    
+    if (gameBoard[spot] !== '' || gameStatus !== 'playing') {
+        console.log("Invalid move");
+        return;
+    }
+    
+    gameBoard[spot] = currentPlayer;
+    console.log("Board after move:", gameBoard);
+    
+    if (checkWin()) {
+        gameStatus = 'won';
+        gameWinner = currentPlayer;
+        updateStats(currentPlayer);
+    } else if (checkDraw()) {
+        gameStatus = 'draw';
+        updateStats('draw');
+    } else {
+        //switch player
+        if (currentPlayer === 'X') {
+            currentPlayer = 'O';
+        } else {
+            currentPlayer = 'X';
+        }
+    }
+    
+    updateBoard();
+    saveGameState();
+}
+
+//checking each condition separately
+function checkWin() {
+    if (gameBoard[0] !== '' && gameBoard[0] === gameBoard[1] && gameBoard[1] === gameBoard[2]) {
+        return true; //top
+    }
+    if (gameBoard[3] !== '' && gameBoard[3] === gameBoard[4] && gameBoard[4] === gameBoard[5]) {
+        return true; //middle
+    }
+    if (gameBoard[6] !== '' && gameBoard[6] === gameBoard[7] && gameBoard[7] === gameBoard[8]) {
+        return true; //bottom
+    }
+    
+
+    if (gameBoard[0] !== '' && gameBoard[0] === gameBoard[3] && gameBoard[3] === gameBoard[6]) {
+        return true; //left
+    }
+    if (gameBoard[1] !== '' && gameBoard[1] === gameBoard[4] && gameBoard[4] === gameBoard[7]) {
+        return true; //middle
+    }
+    if (gameBoard[2] !== '' && gameBoard[2] === gameBoard[5] && gameBoard[5] === gameBoard[8]) {
+        return true; //right
+    }
+    
+    // check diagonals
+    if (gameBoard[0] !== '' && gameBoard[0] === gameBoard[4] && gameBoard[4] === gameBoard[8]) {
+        return true; //diagonal top left to bottom right
+    }
+    if (gameBoard[2] !== '' && gameBoard[2] === gameBoard[4] && gameBoard[4] === gameBoard[6]) {
+        return true; //diagonal top right to bottom left
+    }
+    
+    return false;
+}
+
 function checkDraw() {
-  const isDraw = gameState.board.every((cell) => cell !== "");
-  console.log("Checking for draw:", isDraw);
-  return isDraw;
+    if (gameBoard[0] === '') return false;
+    if (gameBoard[1] === '') return false;
+    if (gameBoard[2] === '') return false;
+    if (gameBoard[3] === '') return false;
+    if (gameBoard[4] === '') return false;
+    if (gameBoard[5] === '') return false;
+    if (gameBoard[6] === '') return false;
+    if (gameBoard[7] === '') return false;
+    if (gameBoard[8] === '') return false;
+    
+    return true;
 }
 
-// Handle game end
-function handleGameEnd(result) {
-  console.log("Handling game end, result:", result);
+//_______________________________________________________________________________________________________________________
 
-  // Update statistics
-  statistics.totalGames++;
-  if (result === "X") {
-    statistics.xWins++;
-  } else if (result === "O") {
-    statistics.oWins++;
-  } else {
-    statistics.draws++;
-  }
-
-  console.log("Updated statistics:", statistics);
-
-  saveStatistics();
-  updateStatisticsDisplay();
-}
 
 // Part C: localStorage Integration
-console.log("\n=== LOCALSTORAGE INTEGRATION ===");
 
-// Save game state
+
+console.log("\n----- localStorage Integration -----");
+
+// save game state
 function saveGameState() {
-  if (!isLocalStorageSupported) return;
+    if (!isLocalStorageSupported) return;
 
-  try {
-    localStorage.setItem(STORAGE_KEYS.GAME_STATE, JSON.stringify(gameState));
-    console.log("Game state saved to localStorage");
-  } catch (error) {
-    console.error("Failed to save game state:", error);
-  }
+    try {
+        var gameStateData = {
+            board: gameBoard,
+            player: currentPlayer,
+            status: gameStatus,
+            winner: gameWinner
+        };
+        localStorage.setItem(gameStateKey, JSON.stringify(gameStateData));
+        console.log("game state saved");
+    } catch (error) {
+        console.error("could not save game state:", error);
+    }
 }
 
-// Load game state
+//load game state
 function loadGameState() {
-  if (!isLocalStorageSupported) return false;
+    if (!isLocalStorageSupported) return false;
 
-  try {
-    const saved = localStorage.getItem(STORAGE_KEYS.GAME_STATE);
-    if (saved) {
-      gameState = JSON.parse(saved);
-      console.log("Game state loaded from localStorage:", gameState);
-      return true;
+    try {
+        var saved = localStorage.getItem(gameStateKey);
+        if (saved) {
+            var gameStateData = JSON.parse(saved);
+            gameBoard = gameStateData.board;
+            currentPlayer = gameStateData.player;
+            gameStatus = gameStateData.status;
+            gameWinner = gameStateData.winner;
+            console.log("game state loaded from localStorage:", gameStateData);
+            return true;
+        }
+    } catch (error) {
+        console.error("failed to load game state:", error);
     }
-  } catch (error) {
-    console.error("Failed to load game state:", error);
-  }
 
-  return false;
+    return false;
 }
 
-// Save statistics
+//save stats
 function saveStatistics() {
-  if (!isLocalStorageSupported) return;
+    if (!isLocalStorageSupported) return;
 
-  try {
-    localStorage.setItem(STORAGE_KEYS.STATISTICS, JSON.stringify(statistics));
-    console.log("Statistics saved to localStorage");
-  } catch (error) {
-    console.error("Failed to save statistics:", error);
-  }
-}
-
-// Load statistics
-function loadStatistics() {
-  if (!isLocalStorageSupported) return;
-
-  try {
-    const saved = localStorage.getItem(STORAGE_KEYS.STATISTICS);
-    if (saved) {
-      statistics = JSON.parse(saved);
-      console.log("Statistics loaded from localStorage:", statistics);
+    try {
+        var statisticsData = { 
+            xWins: xWins, 
+            oWins: oWins, 
+            draws: draws, 
+            totalGames: totalGames 
+        };
+        localStorage.setItem(statsKey, JSON.stringify(statisticsData));
+        console.log("statistics saved to localStorage");
+    } catch (error) {
+        console.error("failed to save statistics:", error);
     }
-  } catch (error) {
-    console.error("Failed to load statistics:", error);
-  }
 }
 
-// Reset statistics
-function resetStatistics() {
-  if (confirm("Are you sure you want to reset all statistics?")) {
-    console.log("Resetting statistics");
+//load stats
+function loadStatistics() {
+    if (!isLocalStorageSupported) return;
 
-    statistics = {
-      totalGames: 0,
-      xWins: 0,
-      oWins: 0,
-      draws: 0,
-    };
+    try {
+        var saved = localStorage.getItem(statsKey);
+        if (saved) {
+            var statisticsData = JSON.parse(saved);
+            xWins = statisticsData.xWins;
+            oWins = statisticsData.oWins;
+            draws = statisticsData.draws;
+            totalGames = statisticsData.totalGames;
+            console.log("Stats loaded from localStorage:", statisticsData);
+        }
+    } catch (error) {
+        console.error("Failed to load stats:", error);
+    }
+}
+
+// reset stats
+function resetStatistics() {
+    console.log("resetting stats");
+
+    xWins = 0;
+    oWins = 0;
+    draws = 0;
+    totalGames = 0;
 
     saveStatistics();
-    updateStatisticsDisplay();
+    showStats();
 
-    console.log("Statistics reset");
-  }
+    console.log("stats reset");
 }
 
-// Part D: UI Update Functions
+function clearAllData() {
+    localStorage.removeItem(gameStateKey);
+    localStorage.removeItem(statsKey);
+    console.log("all data cleared from localStorage");
+}
+
+//_______________________________________________________________________________________________________________________
+
+
+//part e: statistics
+
+
+var xWins = 0;
+var oWins = 0;
+var draws = 0;
+var totalGames = 0;
+
+function updateStats(winner) {
+    totalGames = totalGames + 1;
+    
+    if (winner === 'X') {
+        xWins = xWins + 1;
+    } else if (winner === 'O') {
+        oWins = oWins + 1;
+    } else {
+        draws = draws + 1;
+    }
+    
+    saveStatistics();
+    showStats();
+    
+    console.log("Total games played:", totalGames);
+}
+
+function showStats() {
+    document.getElementById('xWins').textContent = xWins;
+    document.getElementById('oWins').textContent = oWins;
+    document.getElementById('draws').textContent = draws;
+}
+
+//_______________________________________________________________________________________________________________________
+
+
+//display functions
+
+
 function updateBoard() {
-  const cells = document.querySelectorAll(".cell");
-
-  cells.forEach((cell, index) => {
-    const value = gameState.board[index];
-
-    // Update cell content
-    cell.textContent = value;
-
-    // Update cell classes
-    cell.classList.remove("taken", "x", "o", "winning");
-
-    if (value) {
-      cell.classList.add("taken");
-      cell.classList.add(value.toLowerCase());
+    var cell0 = document.querySelector('[data-index="0"]');
+    var cell1 = document.querySelector('[data-index="1"]');
+    var cell2 = document.querySelector('[data-index="2"]');
+    var cell3 = document.querySelector('[data-index="3"]');
+    var cell4 = document.querySelector('[data-index="4"]');
+    var cell5 = document.querySelector('[data-index="5"]');
+    var cell6 = document.querySelector('[data-index="6"]');
+    var cell7 = document.querySelector('[data-index="7"]');
+    var cell8 = document.querySelector('[data-index="8"]');
+    
+    updateSingleCell(cell0, 0);
+    updateSingleCell(cell1, 1);
+    updateSingleCell(cell2, 2);
+    updateSingleCell(cell3, 3);
+    updateSingleCell(cell4, 4);
+    updateSingleCell(cell5, 5);
+    updateSingleCell(cell6, 6);
+    updateSingleCell(cell7, 7);
+    updateSingleCell(cell8, 8);
+    
+    var statusElement = document.getElementById('gameStatus');
+    if (gameStatus === 'won') {
+        statusElement.textContent = 'Player ' + gameWinner + ' wins!';
+    } else if (gameStatus === 'draw') {
+        statusElement.textContent = 'Draw!';
+    } else {
+        statusElement.textContent = 'Player ' + currentPlayer + ' turn';
     }
-
-    // Highlight winning combination
-    if (
-      gameState.winningCombination &&
-      gameState.winningCombination.includes(index)
-    ) {
-      cell.classList.add("winning");
+    
+    var currentElement = document.getElementById('currentPlayer');
+    if (gameStatus === 'playing') {
+        currentElement.textContent = 'Current Player: ' + currentPlayer;
     }
-  });
-
-  console.log("Board display updated");
 }
 
-function updateStatus() {
-  const statusElement = document.getElementById("statusMessage");
+function updateSingleCell(cellElement, index) {
 
-  statusElement.classList.remove("winner", "draw");
-
-  if (gameState.winner) {
-    statusElement.textContent = `Player ${gameState.winner} wins! \uD83C\uDFC6`;
-    statusElement.classList.add("winner");
-  } else if (!gameState.gameActive) {
-    statusElement.textContent = "It's a draw! \uD83E\uDD1D";
-    statusElement.classList.add("draw");
-  } else {
-    statusElement.textContent = `Player ${gameState.currentPlayer}'s turn`;
-  }
-
-  console.log("Status display updated");
+    cellElement.textContent = gameBoard[index];
+    
+    if (gameBoard[index] === 'X') {
+        cellElement.className = 'cell x';
+    } else if (gameBoard[index] === 'O') {
+        cellElement.className = 'cell o';
+    } else {
+        cellElement.className = 'cell';
+    }
+    
+    if (gameBoard[index] !== '' || gameStatus !== 'playing') {
+        cellElement.disabled = true;
+    } else {
+        cellElement.disabled = false;
+    }
 }
 
-function updateStatisticsDisplay() {
-  document.getElementById("totalGames").textContent = statistics.totalGames;
-  document.getElementById("xWins").textContent = statistics.xWins;
-  document.getElementById("oWins").textContent = statistics.oWins;
-  document.getElementById("draws").textContent = statistics.draws;
+//_______________________________________________________________________________________________________________________
 
-  console.log("Statistics display updated");
+
+//setup when page loads
+
+
+function setupCellClickHandlers() {
+    var cell0 = document.querySelector('[data-index="0"]');
+    var cell1 = document.querySelector('[data-index="1"]');
+    var cell2 = document.querySelector('[data-index="2"]');
+    var cell3 = document.querySelector('[data-index="3"]');
+    var cell4 = document.querySelector('[data-index="4"]');
+    var cell5 = document.querySelector('[data-index="5"]');
+    var cell6 = document.querySelector('[data-index="6"]');
+    var cell7 = document.querySelector('[data-index="7"]');
+    var cell8 = document.querySelector('[data-index="8"]');
+    
+    cell0.addEventListener('click', function() { makeMove(0); });
+    cell1.addEventListener('click', function() { makeMove(1); });
+    cell2.addEventListener('click', function() { makeMove(2); });
+    cell3.addEventListener('click', function() { makeMove(3); });
+    cell4.addEventListener('click', function() { makeMove(4); });
+    cell5.addEventListener('click', function() { makeMove(5); });
+    cell6.addEventListener('click', function() { makeMove(6); });
+    cell7.addEventListener('click', function() { makeMove(7); });
+    cell8.addEventListener('click', function() { makeMove(8); });
 }
 
-// Event handlers
-function handleCellClick(event) {
-  const cell = event.target;
-  if (!cell.classList.contains("cell")) return;
-
-  const index = parseInt(cell.getAttribute("data-index"));
-  makeMove(index);
+function setupButtonClickHandlers() {
+    var newGameButton = document.getElementById('newGameBtn');
+    var resetStatsButton = document.getElementById('resetStatsBtn');
+    
+    newGameButton.addEventListener('click', function() {
+        newGame();
+    });
+    
+    resetStatsButton.addEventListener('click', function() {
+        resetStatistics();
+    });
 }
 
-function handleNewGame() {
-  console.log("New game button clicked");
-  initializeGame();
-}
-
-function handleResetStats() {
-  console.log("Reset statistics button clicked");
-  resetStatistics();
-}
-
-// Initialize application
-function initializeApp() {
-  console.log("Initializing Tic-Tac-Toe application...");
-
-  // Load saved data
-  loadStatistics();
-
-  const hasGameState = loadGameState();
-
-  if (!hasGameState) {
-    console.log("No saved game found, starting new game");
-    initializeGame();
-  } else {
-    console.log("Loaded saved game from localStorage");
+document.addEventListener('DOMContentLoaded', function() 
+{
+    showLocalStorage();
+    
+    if (!loadGameState()) 
+    {
+        newGame();
+    }
+    
+    loadStatistics();
+    showStats();
     updateBoard();
-    updateStatus();
-  }
+    
+    setupCellClickHandlers();
+    setupButtonClickHandlers();
 
-  // Update displays
-  updateStatisticsDisplay();
-
-  // Set up event listeners
-  document
-    .getElementById("gameBoard")
-    .addEventListener("click", handleCellClick);
-  document.getElementById("newGameBtn").addEventListener("click", handleNewGame);
-  document
-    .getElementById("resetStatsBtn")
-    .addEventListener("click", handleResetStats);
-
-  console.log("Tic-Tac-Toe application initialized successfully!");
-}
-
-// Start the application
-if (isLocalStorageSupported) {
-  initializeApp();
-} else {
-  alert(
-    "localStorage is not supported in your browser. The game will work but data will not persist."
-  );
-  initializeApp();
-}
-
-// Display demo content
-document.getElementById("output").innerHTML = `
-    <h3>Tic-Tac-Toe Features</h3>
-    <p>&#9989; localStorage integration for game state persistence</p>
-    <p>&#9989; Save and load game automatically</p>
-    <p>&#9989; Track game statistics (wins, losses, draws)</p>
-    <p>&#9989; Winner detection for all combinations</p>
-    <p>&#9989; JSON serialization and parsing</p>
-    <p>Check the console for localStorage demonstrations!</p>
-`;
+});
