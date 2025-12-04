@@ -1,0 +1,138 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #000000;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+p {
+  text-align: center;
+  color: #5c4747;;
+}
+
+.game-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.current-player {
+  margin: 15px 0;
+  font-size: 18px;
+}
+
+.game-board {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  margin: 20px auto;
+  background-color: #000000;
+  border: 3px solid #000000;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border: none;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:hover {
+  background-color: #ecf0f1;
+}
+
+.cell.x {
+  color: #e74c3c;
+}
+
+.cell.o {
+  color: #3498db;
+}
+
+.game-status {
+  margin: 20px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.controls {
+  margin: 20px 0;
+}
+
+.btn {
+  padding: 12px 24px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #574d4d;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #000000;
+}
+
+.statistics {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 0;
+  gap: 10px;
+}
+
+.stat-card {
+  background: #ecf0f1;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.stat-card h3 {
+  margin: 0 0 10px 0;
+  color: #34495e;
+  font-size: 14px;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.player-x {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.player-o {
+  color: #3498db;
+  font-weight: bold;
+}
+
+#output {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  text-align: left;
+}
