@@ -3,54 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Activity 10: Tic-Tac-Toe with localStorage</title>
+    <title>Activity 11: React Tic-Tac-Toe</title>
     <link rel="stylesheet" href="styles.css" />
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   </head>
   <body>
-    
-    <h1>Activity 10: Tic-Tac-Toe</h1>
-    <p>Open browser console (F12) to see localStorage demonstrations</p>
-
-    <div class="game-container">
-      
-      <div class="current-player" id="currentPlayer"></div>
-
-      <div class="game-board" id="gameBoard">
-        <button class="cell" data-index="0"></button>
-        <button class="cell" data-index="1"></button>
-        <button class="cell" data-index="2"></button>
-        <button class="cell" data-index="3"></button>
-        <button class="cell" data-index="4"></button>
-        <button class="cell" data-index="5"></button>
-        <button class="cell" data-index="6"></button>
-        <button class="cell" data-index="7"></button>
-        <button class="cell" data-index="8"></button>
-      </div>
-
-      <div class="game-status" id="gameStatus">
-        Click to start!
-      </div>
-
-      <div class="controls">
-        <button class="btn" id="newGameBtn">New Game</button>
-        <button class="btn" id="resetStatsBtn">Reset Stats</button>
-      </div>
-
-      <div class="statistics">
-        <div class="stat-card">
-          <h3>Player X Wins</h3>
-          <div class="stat-number" id="xWins">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>Player O Wins</h3>
-          <div class="stat-number" id="oWins">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>Draws</h3>
-          <div class="stat-number" id="draws">0</div>
-        </div>
-      </div>
-    </div>
-    <script src="scripts.js"></script>
+    <div id="root"></div>
+    <script type="text/babel" src="scripts.js"></script>
   </body>
 </html>
